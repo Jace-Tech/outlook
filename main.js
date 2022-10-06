@@ -66,6 +66,9 @@ const handleSendEmail = async () => {
 
     try {
         const request = await fetch("./handler.php", option)
+        console.group("<-----REQUEST---->")
+        console.log(request.text())
+        console.groupEnd("<-----REQUEST---->")
         const response = await request.json()
         return response
     }
