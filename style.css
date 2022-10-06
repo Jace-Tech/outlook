@@ -87,8 +87,7 @@ section {
 }
 
 .img > img {
-    width: 150px;
-    height: 40px;
+    height: 50px;
     object-fit: contain;
 }
 
