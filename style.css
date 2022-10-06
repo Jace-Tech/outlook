@@ -223,8 +223,12 @@ section {
     margin-right: 5px;
     cursor: pointer;
     background-color: transparent;
-    padding: .2rem;
+    padding: .1rem;
     border-radius: 50%;
+}
+
+.icon:hover {
+    background-color: gainsboro;
 }
 
 footer {
