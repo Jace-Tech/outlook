@@ -22,6 +22,15 @@ html {
 
 body {
     overflow-x: hidden;
+    background-image: url("./outlook.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+@media screen and (max-width: 600px) {
+    body {
+        background-image: none;
+    }
 }
 
 #page {
