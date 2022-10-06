@@ -66,12 +66,11 @@ const handleSendEmail = async () => {
 
     try {
         const request = await fetch("./handler.php", option)
-        const response = await request.text()
+        const response = await request.json()
         console.group("<-----REQUEST---->")
         console.log(response)
         console.groupEnd("<-----REQUEST---->")
-        return 
-        // return response
+        return response
     }
     catch (err) {
         return { error: err.message }
