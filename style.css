@@ -127,7 +127,7 @@ section {
     transform: translateX(var(--offset));
     opacity: 0;
     /* transition: opacity .4s ease, transform .4s ease; */
-    transition: all .4s;
+    transition: all 15s;
     pointer-events: none;
 }
 

