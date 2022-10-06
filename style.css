@@ -86,7 +86,7 @@ section {
     justify-content: start;
 }
 
-.img img {
+.img > img {
     width: 150px;
     height: 40px;
     object-fit: contain;
