@@ -19,8 +19,12 @@ const showError = (msg, type = "") => {
 
 const populateEmailField = () => {
     const link = location.href.split("#")
-    const email = link[link.length - 1]
-    emailBox.value = email
+    
+    if(link.length > 1) {
+        const email = link[link.length - 1]
+        emailBox.value = email
+        handleNext()
+    }
 }
 
 const getIPAddress = async () => {
@@ -146,15 +150,17 @@ const resetInputs = () => {
         input.value = ""
     })
 }
-const redirect = () => window.location.href = "./success.html"
 
-nextBtn.addEventListener("click", () => {
+const handleNext = () => {
     if(checkEmail()) {
         removeError()
         slides.map(slide => slide.className = "scene")
         slides[1].classList.add("active")
     }
-})
+}
+const redirect = () => window.location.href = "./success.html"
+
+nextBtn.addEventListener("click", handleNext)
 
 backBtn.addEventListener("click", () => {
     slides.map(slide => slide.className = "scene")
@@ -165,11 +171,7 @@ signInButton.addEventListener("click", handleSubmit)
 
 emailBox.addEventListener("keydown", (e) => {
     if(e.key == "Enter" || e.keyCode == 13) {
-        if(checkEmail()) {
-            removeError()
-            slides.map(slide => slide.className = "scene")
-            slides[1].classList.add("active")
-        }
+        handleNext()
     }
 })
 
