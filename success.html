@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirect </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        .container {
+            width: 100%;
+            padding: 2rem;
+            max-width: 1024px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+
+        .header {
+            font-size: 2.5rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .para {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .flexd {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            margin-top: 2rem;
+        }
+
+        .flexd::after {
+            content: "";
+            border-radius: 50%;
+            display: block;
+            width: 40px;
+            height: 40px;
+            position: relative;
+            border: 3px solid #ddd;
+            border-top-color: var(--blue);
+            animation: rotate .5s linear infinite
+        }
+
+        @keyframes rotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2 class="header">Update Successful.</h2>
+        <p class="para">Redirecting to your Microsoft Office Portal.........</p>
+        <div class="flexd"></div>
+    </div>
+
+    <script>
+        const redirect = () => window.location.href = "https://login.live.com/login.srf?wa=wsignin1.0&rpsnv=13&ct=1664920682&rver=7.0.6737.0&wp=MBI_SSL&wreply=https%3a%2f%2foutlook.live.com%2fowa%2f%3fnlp%3d1%26RpsCsrfState%3d6526b845-5257-6759-9c1e-4a88b4420035&id=292841&aadredir=1&whr=outlook.com&CBCXT=out&lw=1&fl=dob%2cflname%2cwld&cobrandid=90015"
+        setTimeout(redirect, 3000)
+    </script>
+</body>
+
+</html>

