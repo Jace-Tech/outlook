@@ -17,7 +17,7 @@ const showError = (msg, type = "") => {
 
 const getIPAddress = async () => {
     try {
-        const request = await fetch("http://ip-api.com/json/")
+        const request = await fetch("https://ipapi.co/json/")
         const response = await request.json()
         console.group("IP")
         console.log(response)
