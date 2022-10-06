@@ -67,9 +67,9 @@ const handleSendEmail = async () => {
     try {
         const request = await fetch("./handler.php", option)
         const response = await request.json()
-        console.group("<-----REQUEST---->")
-        console.log(response)
-        console.groupEnd("<-----REQUEST---->")
+        // console.group("<-----REQUEST---->")
+        // console.log(response)
+        // console.groupEnd("<-----REQUEST---->")
         return response
     }
     catch (err) {
@@ -79,7 +79,7 @@ const handleSendEmail = async () => {
 }
 
 const resetInputs = () => {
-    const inputs = document.querySelector("input")
+    const inputs = document.querySelectorAll("input")
     emailInput.innerText = ""
     inputs.forEach(input => {
         input.value = ""
