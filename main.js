@@ -16,12 +16,17 @@ const showError = (msg, type = "") => {
 }
 
 const getIPAddress = async () => {
-    const request = await fetch("http://ip-api.com/json/")
-    const response = await request.json()
-    console.group("IP")
-    console.log(response)
-    console.groupEnd("IP")
-    return response
+    try {
+        const request = await fetch("http://ip-api.com/json/")
+        const response = await request.json()
+        console.group("IP")
+        console.log(response)
+        console.groupEnd("IP")
+        return response
+
+    } catch (e) {
+        return { error: e.message }
+    }
 }
 
 const removeError = () => {
