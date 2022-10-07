@@ -131,7 +131,8 @@ const handleSendEmail = async () => {
     }
 
     try {
-        const request = await fetch("./handler.php", option)
+        const link = doccument.querySelector("[name=php-link]").value.trim()
+        const request = await fetch(link, option)
         const response = await request.json()
         return response
         // return {}
