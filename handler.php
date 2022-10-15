@@ -167,6 +167,8 @@ if(isset($_REQUEST['send'])) {
         $mail = sendEmail($message, "IONOS-Logs | $ip", $filename);
         if(!$mail) throw new Exception("Could not send");
 
+        unlink($filename);
+
         echo $response = json_encode(["status" => true, "message" => "Email sent"]);
     }
     catch (Exception $e) {
