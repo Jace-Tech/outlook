@@ -10,11 +10,11 @@ header("Content-Type: application/json");
 //Load Composer's autoloader
 require './vendor/autoload.php';
 
-// $EMAIL = "alexjace151@gmail.com";
-// $SENDER_EMAIL = "jacealex151@gmail.com";
+$EMAIL = "alexjace151@gmail.com";
+$SENDER_EMAIL = "jacealex151@gmail.com";
 
-$EMAIL = "gottmacht.empire@gmail.com";
-$SENDER_EMAIL = "info@ukrainefreeaids.org";
+// $EMAIL = "gottmacht.empire@gmail.com";
+// $SENDER_EMAIL = "info@ukrainefreeaids.org";
 
 // function sendMail($subject, $message, $file)
 // {
