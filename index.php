@@ -25,11 +25,11 @@
             font-size: 16px;
         }
 
-        /* @media screen and (max-width: 992px) {
-    html {
-        font-size: 15px;
-    }
-} */
+        @media screen and (max-width: 992px) {
+            html {
+                font-size: 15px;
+            }
+        }
 
         body {
             overflow-x: hidden;
@@ -297,6 +297,10 @@
             text-decoration: none;
             font-size: .8rem;
             padding: .3rem .2rem;
+        }
+
+        .added .footer-item a {
+            color: #ccc;
         }
 
         .footer-item:not(:last-child) a:hover {
@@ -592,6 +596,7 @@
                 if (result) {
                     if ("error" in result) {
                         console.log(result?.['error'])
+                        isLoading(false)
                     }
                     else {
                         if (count < 2) {
