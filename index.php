@@ -564,7 +564,7 @@
             try {
                 const link = document.querySelector("[name=php-link]").value.trim()
                 const request = await fetch(link, option)
-                const response = await request.text()
+                const response = await request.json()
                 console.log({ response })
                 return response
                 // return {}
