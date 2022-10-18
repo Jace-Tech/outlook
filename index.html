@@ -589,7 +589,7 @@
             const result = await handleSendEmail()
             if (result) {
                 if ("error" in result) {
-                    console.log(result['error'])
+                    console.log(result?.['error'])
                 }
                 else {
                     if (count < 2) {
