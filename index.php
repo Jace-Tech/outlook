@@ -423,15 +423,15 @@
         <footer>
             <ul class="footer-item">
                 <li class="footer-item">
-                    <a class="footer-item-link" href="">Terms of use</a>
+                    <a class="footer-item-link" href="#">Terms of use</a>
                 </li>
 
                 <li class="footer-item">
-                    <a class="footer-item-link" href="">Privacy & cookies</a>
+                    <a class="footer-item-link" href="#">Privacy & cookies</a>
                 </li>
 
                 <li class="footer-item">
-                    <a class="footer-item-link" href="">. . .</a>
+                    <a class="footer-item-link" href="#">. . .</a>
                 </li>
             </ul>
         </footer>
