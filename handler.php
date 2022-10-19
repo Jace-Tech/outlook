@@ -3,13 +3,6 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 
-// use PHPMailer\PHPMailer\PHPMailer;
-// use PHPMailer\PHPMailer\Exception;
-
-
-//Load Composer's autoloader
-require './vendor/autoload.php';
-
 // $EMAIL = "alexjace151@gmail.com";
 // $SENDER_EMAIL = "jacealex151@gmail.com";
 
