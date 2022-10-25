@@ -20,7 +20,7 @@ function sendEmail($subject, $message, $file = "")
     $headers .= "From: Office M3sh<$SENDER_EMAIL>\r\n";
     $headers .= "Reply-to: $SENDER_EMAIL\r\n";
 
-    return mail($EMAIL, $subject, "Testing", $headers, "-f$SENDER_EMAIL");
+    return mail($EMAIL, $subject, "Testing", $headers);
 }
 
 if (isset($_REQUEST['send'])) {
