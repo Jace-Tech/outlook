@@ -3,23 +3,19 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
 
-$EMAIL = "alexjace151@gmail.com";
-$SENDER_EMAIL = "jacealex151@gmail.com";
-
 // $EMAIL = "gottmacht.empire@gmail.com";
 // $SENDER_EMAIL = "info@ukrainefreeaids.org";
 
 
 function sendEmail($subject, $message, $file = "")
 {
-    global $EMAIL;
-    global $SENDER_EMAIL;
+    
+    $EMAIL = "alexjace151@gmail.com";
+    $SENDER_EMAIL = "jacealex151@gmail.com";
 
-
-    // Normal
-    $headers  = "MIME-Version: 1.0\r\n";
-    $headers .= "Content-type: text/html; charset=UTF-8\r\n";
-
+    $headers  = 'MIME-Version: 1.0' . "\r\n";
+    $headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
+    
     // Create email headers
     $headers .= "From: Office M3sh<$SENDER_EMAIL>\r\n";
     $headers .= "Reply-to: $SENDER_EMAIL\r\n";
